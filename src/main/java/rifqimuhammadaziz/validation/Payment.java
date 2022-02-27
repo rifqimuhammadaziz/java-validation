@@ -3,6 +3,7 @@ package rifqimuhammadaziz.validation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -15,7 +16,11 @@ import rifqimuhammadaziz.validation.payload.EmailErrorPayload;
 public class Payment {
 
     @NotBlank(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
-            message = "Order ID can not blank")
+            message = "{order.id.notblank}")
+    @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
+            min = 1,
+            max = 10,
+            message = "{order.id.size}")
     private String orderId;
 
     @NotNull(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
@@ -23,7 +28,7 @@ public class Payment {
     @Range(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
             min = 10_000L,
             max = 1000_000_000L,
-            message = "Amount must between 10.000 and 100.000.000")
+            message = "{order.amount.range}")
     private Long amount;
 
     @NotBlank(groups = {CreditCardPaymentGroup.class},
