@@ -58,4 +58,15 @@ public class Person {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
+
+    public void sayHello(@NotBlank(message = "Name can not blank") String name) {
+        System.out.println("Hello " + name + ", my name is " + firstName);
+    }
+
+    @NotBlank(message = "Full Name can not blank")
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
+
+
 }
