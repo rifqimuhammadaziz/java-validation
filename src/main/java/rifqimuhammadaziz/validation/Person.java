@@ -19,12 +19,18 @@ public class Person {
     @Valid
     private Address address;
 
+    @Valid
     public Person() {
     }
 
-    public Person(String firstName, String lastName) {
+    @Valid
+    public Person(
+            @NotBlank(message = "First Name can not blank") String firstName,
+            @NotBlank(message = "Last Name can not blank") String lastName,
+            @NotNull(message = "Address can not null") @Valid Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
     }
 
     public Address getAddress() {
