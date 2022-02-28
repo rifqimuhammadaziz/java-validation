@@ -9,12 +9,16 @@ import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.LuhnCheck;
 import org.hibernate.validator.constraints.Range;
+import rifqimuhammadaziz.validation.constraint.CheckCase;
+import rifqimuhammadaziz.validation.enums.CaseMode;
 import rifqimuhammadaziz.validation.group.CreditCardPaymentGroup;
 import rifqimuhammadaziz.validation.group.VirtualAccountPaymentGroup;
 import rifqimuhammadaziz.validation.payload.EmailErrorPayload;
 
 public class Payment {
 
+    @CheckCase(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
+            mode = CaseMode.UPPER, message = "{order.id.upper}")
     @NotBlank(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
             message = "{order.id.notblank}")
     @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
