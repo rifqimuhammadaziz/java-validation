@@ -4,6 +4,10 @@ import jakarta.validation.*;
 import jakarta.validation.executable.ExecutableValidator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import rifqimuhammadaziz.validation.extractor.DataIntegerValueExtractor;
+import rifqimuhammadaziz.validation.extractor.DataValueExtractor;
+import rifqimuhammadaziz.validation.extractor.EntryValueExtractorKey;
+import rifqimuhammadaziz.validation.extractor.EntryValueExtractorValue;
 
 import java.util.Set;
 
@@ -19,7 +23,14 @@ public abstract class AbstractValidatorTest {
 
     @BeforeEach
     void setUp() {
-        validatorFactory = Validation.buildDefaultValidatorFactory();
+        // validatorFactory = Validation.buildDefaultValidatorFactory();
+
+        validatorFactory = Validation.byDefaultProvider().configure()
+                .addValueExtractor(new DataValueExtractor())
+                .addValueExtractor(new EntryValueExtractorKey())
+                .addValueExtractor(new EntryValueExtractorValue())
+                .addValueExtractor(new DataIntegerValueExtractor())
+                .buildValidatorFactory();
         validator = validatorFactory.getValidator();
         executableValidator = validator.forExecutables();
         messageInterpolator = validatorFactory.getMessageInterpolator();
